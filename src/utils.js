@@ -14,11 +14,13 @@ export const logDebug = function (message) {
  * Load GTM script tag
  * @param {String}  id  GTM ID
  */
-export const loadScript = function (id, auth = null) {
+export const loadScript = function (id, auth = null, preview = null, cookiesWin = null) {
   const win    = window,
         doc    = document,
         script = doc.createElement('script'),
         dl     = 'dataLayer'
+  
+  let src = `https://www.googletagmanager.com/gtm.js?id=${id}`;
 
   win[dl] = win[dl] || []
 
@@ -28,11 +30,20 @@ export const loadScript = function (id, auth = null) {
   })
 
   script.async = true;
-  script.src   = `https://www.googletagmanager.com/gtm.js?id=${id}`
 
   if (auth) {
-    script.src += `&gtm_auth=${auth}`
+    src = src + `&gtm_auth=${auth}`
   }
+
+  if (preview) {
+    src = src + `&gtm_preview=${preview}`
+  }
+
+  if (cookiesWin) {
+    src = src + `&gtm_cookies_win=${cookiesWin}`
+  }
+
+  script.src = src
 
   doc.body.appendChild(script)
 }
