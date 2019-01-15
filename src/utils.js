@@ -14,7 +14,7 @@ export const logDebug = function (message) {
  * Load GTM script tag
  * @param {String}  id  GTM ID
  */
-export const loadScript = function (id, auth = null, preview = null, cookiesWin = null) {
+export const loadScript = function (id, auth, preview, cookiesWin) {
   const win    = window,
         doc    = document,
         script = doc.createElement('script'),
@@ -31,15 +31,15 @@ export const loadScript = function (id, auth = null, preview = null, cookiesWin 
 
   script.async = true;
 
-  if (auth) {
+  if (typeof auth !== 'undefined') {
     src = src + `&gtm_auth=${auth}`
   }
 
-  if (preview) {
+  if (typeof preview !== 'undefined') {
     src = src + `&gtm_preview=${preview}`
   }
 
-  if (cookiesWin) {
+  if (typeof cookiesWin !== 'undefined') {
     src = src + `&gtm_cookies_win=${cookiesWin}`
   }
 
