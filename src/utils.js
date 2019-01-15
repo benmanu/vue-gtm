@@ -14,7 +14,7 @@ export const logDebug = function (message) {
  * Load GTM script tag
  * @param {String}  id  GTM ID
  */
-export const loadScript = function (id) {
+export const loadScript = function (id, auth = null) {
   const win    = window,
         doc    = document,
         script = doc.createElement('script'),
@@ -29,6 +29,10 @@ export const loadScript = function (id) {
 
   script.async = true;
   script.src   = `https://www.googletagmanager.com/gtm.js?id=${id}`
+
+  if (auth) {
+    script.src += `&gtm_auth=${auth}`
+  }
 
   doc.body.appendChild(script)
 }
